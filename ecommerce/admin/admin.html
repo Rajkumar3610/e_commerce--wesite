@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Mart Admin Panel</title>
+    <link href="css/admin.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div id="adminSidebar" 
+            class="fixed top-0 left-0 h-full w-72 bg-white shadow-xl transform transition-transform duration-300 
+            ease-in-out z-50 lg:relative lg:transform-none -translate-x-full hidden">
+            <!-- Logo Section -->
+            <div class="p-6 border-b flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-shopping-basket text-white text-xl"></i>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-800">Fresh Mart</h1>
+                </div>
+                <!-- Close button for mobile -->
+                <button onclick="toggleSidebar()" class="lg:hidden text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="p-6 space-y-2">
+                <!-- Dashboard -->
+                <button onclick="switchAdminTab('dashboard')" 
+                    class="w-full p-3 rounded-xl flex items-center gap-3 transition-all duration-300
+                    hover:bg-blue-50 group" data-tab="dashboard">
+                    <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center
+                        group-hover:bg-blue-600 transition-colors">
+                        <i class="fas fa-chart-line text-blue-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <div class="text-left">
+                        <span class="block font-medium text-gray-700 group-hover:text-blue-600">Dashboard</span>
+                        <span class="text-xs text-gray-500">Overview & Stats</span>
+                    </div>
+                </button>
+
+                <!-- Products -->
+                <button onclick="switchAdminTab('products')" 
+                    class="w-full p-3 rounded-xl flex items-center gap-3 transition-all duration-300
+                    hover:bg-purple-50 group" data-tab="products">
+                    <div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center
+                        group-hover:bg-purple-600 transition-colors">
+                        <i class="fas fa-box text-purple-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <div class="text-left">
+                        <span class="block font-medium text-gray-700 group-hover:text-purple-600">Products</span>
+                        <span class="text-xs text-gray-500">Manage Products</span>
+                    </div>
+                </button>
+
+                <!-- Orders -->
+                <button onclick="switchAdminTab('orders')" 
+                    class="w-full p-3 rounded-xl flex items-center gap-3 transition-all duration-300
+                    hover:bg-green-50 group" data-tab="orders">
+                    <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center
+                        group-hover:bg-green-600 transition-colors">
+                        <i class="fas fa-shopping-cart text-green-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <div class="text-left">
+                        <span class="block font-medium text-gray-700 group-hover:text-green-600">Orders</span>
+                        <span class="text-xs text-gray-500">Process Orders</span>
+                    </div>
+                </button>
+
+                <!-- Users -->
+                <button onclick="switchAdminTab('users')" 
+                    class="w-full p-3 rounded-xl flex items-center gap-3 transition-all duration-300
+                    hover:bg-orange-50 group" data-tab="users">
+                    <div class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center
+                        group-hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-users text-orange-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <div class="text-left">
+                        <span class="block font-medium text-gray-700 group-hover:text-orange-600">Users</span>
+                        <span class="text-xs text-gray-500">Manage Users</span>
+                    </div>
+                </button>
+
+                <!-- Analytics -->
+                <button onclick="switchAdminTab('analytics')" 
+                    class="w-full p-3 rounded-xl flex items-center gap-3 transition-all duration-300
+                    hover:bg-indigo-50 group" data-tab="analytics">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-100 flex items-center justify-center
+                        group-hover:bg-indigo-600 transition-colors">
+                        <i class="fas fa-chart-bar text-indigo-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <div class="text-left">
+                        <span class="block font-medium text-gray-700 group-hover:text-indigo-600">Analytics</span>
+                        <span class="text-xs text-gray-500">View Reports</span>
+                    </div>
+                </button>
+
+                <!-- Profile -->
+                <button onclick="switchAdminTab('profile')" 
+                    class="w-full group" data-tab="profile">
+                    <div class="w-full p-3 rounded-xl flex items-center gap-3 hover:bg-gray-50 transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center
+                            group-hover:bg-pink-100 transition-colors">
+                            <i class="fas fa-user-cog text-pink-600"></i>
+                        </div>
+                        <div class="text-left">
+                            <span class="block font-medium text-gray-700">Profile</span>
+                            <span class="text-xs text-gray-400">Account Settings</span>
+                        </div>
+                    </div>
+                </button>
+            </nav>
+
+            <!-- Bottom Section -->
+            <div class="absolute bottom-0 left-0 right-0 p-6 border-t bg-gray-50">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                        <i class="fas fa-user text-blue-600"></i>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-700">Admin User</p>
+                        <p class="text-xs text-gray-500">admin@freshmart.com</p>
+                    </div>
+                </div>
+                <button onclick="handleAdminLogout()" 
+                    class="w-full p-3 rounded-xl bg-red-50 text-red-600 font-medium
+                    hover:bg-red-100 transition-colors flex items-center justify-center gap-2">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Navigation -->
+            <header id="adminHeader" class="bg-white shadow-sm hidden">
+                <div class="flex justify-between items-center p-4">
+                    <div class="flex items-center">
+                        <button onclick="toggleSidebar()" class="p-2 rounded-lg text-gray-600 hover:bg-gray-100">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <h2 id="pageTitle" class="text-xl font-semibold ml-4">Dashboard</h2>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div id="notificationBell" class="relative">
+                            <button onclick="toggleNotifications()" 
+                                class="p-2 rounded-lg text-gray-600 hover:bg-gray-100">
+                                <i class="fas fa-bell"></i>
+                                <span id="notificationCount" 
+                                    class="absolute -top-1 -right-1 bg-red-500 text-white text-xs 
+                                    w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                            </button>
+                        </div>
+                        <div class="flex items-center">
+                            <span id="adminName" class="text-gray-700 mr-2">Admin</span>
+                            <img id="adminAvatar" 
+                                src="data:image/png;base64,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" 
+                                onerror="this.onerror=null; this.innerHTML='<i class=\'fas fa-user\'></i>'; this.className='w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600';"
+                                class="w-8 h-8 rounded-full">
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto bg-gray-100 p-4">
+                <div id="adminContent">
+                    <!-- Content will be rendered here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Notification Panel (Hidden by default) -->
+    <div id="notificationPanel" 
+        class="fixed right-4 top-16 w-80 bg-white rounded-xl shadow-lg hidden transform transition-all duration-300">
+        <!-- Notifications will be rendered here -->
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/data.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html> 
